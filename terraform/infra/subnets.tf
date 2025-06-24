@@ -74,6 +74,30 @@ resource "oci_core_security_list" "public_subnet_sl" {
       max = 6443
     }
   }
+
+  # ingress from internet on HTTP (for NGINX Ingress LoadBalancer)
+  ingress_security_rules {
+    stateless   = false
+    source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    protocol    = "6"
+    tcp_options {
+      min = 80
+      max = 80
+    }
+  }
+
+  # ingress from internet on HTTPS (for NGINX Ingress LoadBalancer)
+  ingress_security_rules {
+    stateless   = false
+    source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    protocol    = "6"
+    tcp_options {
+      min = 443
+      max = 443
+    }
+  }
 }
 
 # for network load balancer
